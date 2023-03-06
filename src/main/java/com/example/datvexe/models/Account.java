@@ -2,10 +2,9 @@ package com.example.datvexe.models;
 
 import com.example.datvexe.common.Provider;
 import com.example.datvexe.common.Role;
-import com.example.datvexe.common.TrangThai;
+import com.example.datvexe.common.Status;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,7 +14,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Table(name = "taikhoan")
-public class TaiKhoan {
+public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -37,7 +36,7 @@ public class TaiKhoan {
 
     @Column(name = "trangthaihoatdong")
     @Enumerated(EnumType.STRING)
-    private TrangThai trangThaiHoatDong;
+    private Status trangThaiHoatDong;
 
     @OneToOne(mappedBy ="taiKhoan")
     @JsonBackReference
@@ -49,7 +48,7 @@ public class TaiKhoan {
 
     @OneToOne(mappedBy ="taiKhoan")
     @JsonBackReference
-    private NhaXe nhaXe;
+    private BusCompany nhaXe;
 
 
 }

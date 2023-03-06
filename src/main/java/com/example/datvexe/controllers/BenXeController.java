@@ -1,13 +1,12 @@
 package com.example.datvexe.controllers;
 
 import com.example.datvexe.handler.CustomException;
-import com.example.datvexe.models.BenXe;
+import com.example.datvexe.models.BusStation;
 import com.example.datvexe.payloads.requests.BenXeRequest;
 import com.example.datvexe.payloads.responses.DataResponse;
 import com.example.datvexe.services.BenXeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,7 +23,7 @@ public class BenXeController {
     public DataResponse getBenXeById(@PathVariable("id") String id) {
         if (id == null) throw new CustomException("400", "Missing field");
         Long benXeId = Long.valueOf(id);
-        BenXe benXe = benXeService.findBenXeById(benXeId);
+        BusStation benXe = benXeService.findBenXeById(benXeId);
         if (benXe == null) throw new CustomException("404", "Khong tim thay ben xe!!!!");
         return new DataResponse("200", benXe);
     }
@@ -32,14 +31,14 @@ public class BenXeController {
     @GetMapping("/all-admin")
     @PreAuthorize("hasAnyRole('ADMIN')")
     public DataResponse getAllForAdmin() {
-        List<BenXe> benXeList = benXeService.findAllBenXeForAdmin();
+        List<BusStation> benXeList = benXeService.findAllBenXeForAdmin();
         if (benXeList.size() == 0) throw new CustomException("404", "Khong co ben xe!!!");
         return new DataResponse("200", benXeList);
     }
 
     @GetMapping("/all-user")
     public DataResponse getAllForUser() {
-        List<BenXe> benXeList = benXeService.findAllBenXeForUser();
+        List<BusStation> benXeList = benXeService.findAllBenXeForUser();
         if (benXeList.size() == 0) throw new CustomException("404", "Khong co ben xe!!!");
         return new DataResponse("200", benXeList);
     }
@@ -48,7 +47,7 @@ public class BenXeController {
     @PreAuthorize("hasAnyRole('ADMIN')")
     public DataResponse addNewBenXe(@RequestBody BenXeRequest benXeRequest) {
         if (benXeRequest == null) throw  new CustomException("400", "Missing field");
-        BenXe newBenXe = benXeService.addNewBenXe(benXeRequest);
+        BusStation newBenXe = benXeService.addNewBenXe(benXeRequest);
         if (newBenXe==null) throw new CustomException("400","Ten ben xe da ton tai!!!");
         return new DataResponse("200", newBenXe);
     }
@@ -58,7 +57,7 @@ public class BenXeController {
     public DataResponse updateBenXe(@PathVariable("id") String id, @RequestBody BenXeRequest benXeRequest) {
         if (benXeRequest == null) throw  new CustomException("400", "Missing field");
         Long benXeId = Long.valueOf(id);
-        BenXe benXe = benXeService.updateBenXe(benXeRequest,benXeId);
+        BusStation benXe = benXeService.updateBenXe(benXeRequest,benXeId);
         if (benXe == null) throw new CustomException("404", "Khong tim thay ben xe!!!");
         return new DataResponse("200", benXe);
     }

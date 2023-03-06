@@ -2,7 +2,7 @@ package com.example.datvexe.payloads.requests;
 
 
 import com.example.datvexe.common.Role;
-import com.example.datvexe.common.TrangThai;
+import com.example.datvexe.common.Status;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,5 +27,5 @@ public class SignUpRequest {
     private String email;
     private String diaChi;
     private String moTaNgan;
-    private TrangThai trangThaiHoatDong;
+    private Status trangThaiHoatDong;
 }

@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Data
-public class SaoTrungBinhAllResponse {
-    private Long id;
-    private Float saoTrungBinh;
+public class AverageOfEvaluationResponse {
+    private Long idBusCompany;
+    private Float averageOfEvaluation;
 }

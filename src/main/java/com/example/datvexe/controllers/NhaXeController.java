@@ -1,7 +1,7 @@
 package com.example.datvexe.controllers;
 
 import com.example.datvexe.handler.CustomException;
-import com.example.datvexe.models.NhaXe;
+import com.example.datvexe.models.BusCompany;
 import com.example.datvexe.payloads.requests.NhaXeRequest;
 import com.example.datvexe.payloads.responses.DataResponse;
 import com.example.datvexe.payloads.responses.NhaXeResponse;
@@ -39,7 +39,7 @@ public class NhaXeController {
     @GetMapping("/admin/all")
     @PreAuthorize("hasAnyRole('ADMIN')")
     public DataResponse getAllForUser(){
-        List<NhaXe> listNhaXe = nhaXeService.getAll();
+        List<BusCompany> listNhaXe = nhaXeService.getAll();
         if (listNhaXe.size() == 0) throw new CustomException("404","Khong co nha xe nao!!!");
         return new DataResponse("200",listNhaXe);
     }
@@ -49,7 +49,7 @@ public class NhaXeController {
     public DataResponse getById(@PathVariable("id") String id){
         if (id==null) throw new CustomException("400", "Missing field!!!");
         Long nhaXeId = Long.valueOf(id);
-        NhaXe nhaXe = nhaXeService.getNhaXeById(nhaXeId);
+        BusCompany nhaXe = nhaXeService.getNhaXeById(nhaXeId);
         if (nhaXe==null) throw new CustomException("404", "Khong ton tai nha xe nhu yeu cau!!!");
         return new DataResponse("200",nhaXe);
     }

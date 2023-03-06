@@ -1,19 +1,19 @@
 package com.example.datvexe.repositories;
 
-import com.example.datvexe.common.TrangThai;
-import com.example.datvexe.models.BenXe;
+import com.example.datvexe.common.Status;
+import com.example.datvexe.models.BusStation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface BenXeRepository extends JpaRepository<BenXe, Long> {
-    List<BenXe> findAll();
-    List<BenXe> findAllByTrangThai(TrangThai trangThai);
-    BenXe findOneById(Long id);
+public interface BenXeRepository extends JpaRepository<BusStation, Long> {
+    List<BusStation> findAll();
+    List<BusStation> findAllByTrangThai(Status trangThai);
+    BusStation findOneById(Long id);
 
-    BenXe save(BenXe value);
+    BusStation save(BusStation value);
 
-    BenXe findBenXeByTenBenXeLike(String tenBenXe);
+    BusStation findBenXeByTenBenXeLike(String tenBenXe);
 }

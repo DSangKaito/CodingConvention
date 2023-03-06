@@ -1,5 +1,5 @@
 package com.example.datvexe.models;
-import com.example.datvexe.common.TrangThai;
+import com.example.datvexe.common.Status;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -16,7 +16,7 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name ="tuyenxe")
-public class TuyenXe {
+public class BusLine {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -24,41 +24,41 @@ public class TuyenXe {
 
     @Column(name = "ngaydi")
     @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private LocalDate ngayDi;
+    private LocalDate dateStarting;
 
     @Column(name = "giodi")
-    private LocalTime gioDi;
+    private LocalTime timeStarting;
 
     @Column(name = "thoigianhanhtrinh")
-    private String thoiGianHanhTrinh;
+    private String timeOfTrip;
 
     @Column(name = "giave")
-    private int giaVe;
+    private int fare;
 
     @Column(name = "trangthai")
     @Enumerated(EnumType.STRING)
-    private TrangThai trangThai;
+    private Status status;
 
     @ManyToOne
     @JoinColumn(name = "benxedi_id", referencedColumnName = "id")
     @JsonManagedReference
-    private BenXe benXeDi;
+    private BusStation busStationStarting;
     @ManyToOne
     @JoinColumn(name = "benxeden_id", referencedColumnName = "id")
     @JsonManagedReference
-    private BenXe benXeDen;
+    private BusStation busStationEnding;
 
-    @OneToMany(mappedBy="tuyenXe")
+    @OneToMany(mappedBy="busLine")
     @JsonIgnore
-    private List<VeXe> veXe;
+    private List<Ticket> ticket;
 
-    @OneToMany(mappedBy="tuyenXe")
+    @OneToMany(mappedBy="busLine")
     @JsonBackReference
-    private List<HangHoa> hangHoa;
+    private List<Packages> packages;
 
     @ManyToOne
-    @JoinColumn(name = "xe_id", referencedColumnName = "id")
+    @JoinColumn(name = "bus_id", referencedColumnName = "id")
     @JsonManagedReference
-    private Xe xe;
+    private Bus bus;
 
 }

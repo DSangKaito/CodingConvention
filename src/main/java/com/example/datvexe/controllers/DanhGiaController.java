@@ -2,7 +2,7 @@ package com.example.datvexe.controllers;
 
 
 import com.example.datvexe.handler.CustomException;
-import com.example.datvexe.models.DanhGia;
+import com.example.datvexe.models.Evaluation;
 import com.example.datvexe.payloads.requests.DanhGiaRequest;
 import com.example.datvexe.payloads.responses.DataResponse;
 import com.example.datvexe.services.DanhGiaService;
@@ -24,7 +24,7 @@ public class DanhGiaController {
     @PreAuthorize("hasAnyRole('USER')")
     public DataResponse addDanhGia(@RequestBody DanhGiaRequest danhGiaRequest){
         if (danhGiaRequest == null) throw new CustomException("400", "Missing request!!!");
-        DanhGia dataResponse = danhGiaService.addDanhGia(danhGiaRequest);
+        Evaluation dataResponse = danhGiaService.addDanhGia(danhGiaRequest);
         if (dataResponse == null) throw new CustomException("404", "Them danh gia that bai!!!");
         return new DataResponse("200",dataResponse);
     }
@@ -34,7 +34,7 @@ public class DanhGiaController {
     public DataResponse getDanhGiaById(@PathVariable("id") String id){
         if (id ==null) throw  new CustomException("400", "Missing field!!!");
         Long danhGiaId = Long.valueOf(id);
-        DanhGia danhGia = danhGiaService.getDanhGiaById(danhGiaId);
+        Evaluation danhGia = danhGiaService.getDanhGiaById(danhGiaId);
         if (danhGia == null) throw new CustomException("404", "Khong tim thay danh gia!!!");
         return new DataResponse("200",danhGia);
     }
@@ -43,7 +43,7 @@ public class DanhGiaController {
     public DataResponse getDanhGiaByNhaXeId(@PathVariable("nhaxe_id") String nhaXeId){
         if (nhaXeId ==null) throw  new CustomException("400", "Missing field!!!");
         Long id = Long.valueOf(nhaXeId);
-        List<DanhGia> danhGia = danhGiaService.getDanhGiaByNhaXeId(id);
+        List<Evaluation> danhGia = danhGiaService.getDanhGiaByNhaXeId(id);
         if (danhGia == null) throw new CustomException("200", "Khong co danh gia nao!!!");
         return new DataResponse("200",danhGia);
     }

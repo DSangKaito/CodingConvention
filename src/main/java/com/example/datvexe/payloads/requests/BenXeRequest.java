@@ -1,6 +1,6 @@
 package com.example.datvexe.payloads.requests;
 
-import com.example.datvexe.common.TrangThai;
+import com.example.datvexe.common.Status;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,5 +12,5 @@ public class BenXeRequest {
     private String tenBenXe;
     private String tinhThanh;
     private String diaChiChiTiet;
-    private TrangThai trangThai;
+    private Status trangThai;
 }

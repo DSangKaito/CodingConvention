@@ -1,8 +1,7 @@
 package com.example.datvexe.config;
 
-import com.example.datvexe.common.Role;
-import com.example.datvexe.common.TrangThai;
-import com.example.datvexe.models.TaiKhoan;
+import com.example.datvexe.common.Status;
+import com.example.datvexe.models.Account;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -13,9 +12,9 @@ import java.util.Collections;
 
 @Data
 public class CustomTaiKhoanDetails implements UserDetails {
-    TaiKhoan user;
+    Account user;
 
-    public CustomTaiKhoanDetails (TaiKhoan user) {
+    public CustomTaiKhoanDetails (Account user) {
         this.user = user;
     }
     @Override
@@ -51,7 +50,7 @@ public class CustomTaiKhoanDetails implements UserDetails {
 
     @Override
         public boolean isEnabled() {
-            if (user.getTrangThaiHoatDong().equals(TrangThai.ACTIVE))
+            if (user.getTrangThaiHoatDong().equals(Status.ACTIVE))
                 return true;
             else return false;
     }

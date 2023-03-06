@@ -1,8 +1,8 @@
 package com.example.datvexe.services.impl;
 
-import com.example.datvexe.models.BenXe;
+import com.example.datvexe.models.BusStation;
 import com.example.datvexe.models.TuyenXe;
-import com.example.datvexe.models.Xe;
+import com.example.datvexe.models.Bus;
 import com.example.datvexe.payloads.requests.TuyenXeRequest;
 import com.example.datvexe.payloads.requests.TuyenXeRequestByAddress;
 import com.example.datvexe.payloads.requests.TuyenXeRequestByAddressDate;
@@ -19,19 +19,19 @@ import java.util.List;
 @Slf4j
 public class TuyenXeServiceImpl implements TuyenXeService {
     @Autowired
-    TuyenXeRepository tuyenXeRepository;
+    BusLineRepository tuyenXeRepository;
 
     @Autowired
     BenXeRepository benXeRepository;
 
     @Autowired
-    XeRepository xeRepository;
+    BusRepository xeRepository;
 
     @Autowired
-    HangHoaRepository hangHoaRepository;
+    PackagesRepository hangHoaRepository;
 
     @Autowired
-    VeXeRepository veXeRepository;
+    TicketRepository veXeRepository;
 
     public TuyenXe convertTuyenXeRequestToTuyenXe(TuyenXeRequest tuyenXeRequest, TuyenXe tuyenXe) {
         tuyenXe.setNgayDi(tuyenXeRequest.getNgayDi());
@@ -39,13 +39,13 @@ public class TuyenXeServiceImpl implements TuyenXeService {
         tuyenXe.setThoiGianHanhTrinh(tuyenXeRequest.getThoiGianHanhTrinh());
         tuyenXe.setGiaVe(tuyenXeRequest.getGiaVe());
         tuyenXe.setTrangThai(tuyenXeRequest.getTrangThai());
-        BenXe benXeDi = benXeRepository.findBenXeByTenBenXeLike(tuyenXeRequest.getTenBenXeDi());
+        BusStation benXeDi = benXeRepository.findBenXeByTenBenXeLike(tuyenXeRequest.getTenBenXeDi());
         if(benXeDi == null) return null;
         tuyenXe.setBenXeDi(benXeDi);
-        BenXe benXeDen = benXeRepository.findBenXeByTenBenXeLike(tuyenXeRequest.getTenBenXeDen());
+        BusStation benXeDen = benXeRepository.findBenXeByTenBenXeLike(tuyenXeRequest.getTenBenXeDen());
         if(benXeDen == null) return null;
         tuyenXe.setBenXeDen(benXeDen);
-        Xe xe = xeRepository.findXeByBienSoXe(tuyenXeRequest.getBienSoXe());
+        Bus xe = xeRepository.findXeByBienSoXe(tuyenXeRequest.getBienSoXe());
         tuyenXe.setXe(xe);
         return tuyenXe;
     }
@@ -63,9 +63,9 @@ public class TuyenXeServiceImpl implements TuyenXeService {
     }
 
     public List<TuyenXe> getTuyenXeByBenXeDiBenXeDenNgayDi(TuyenXeRequest tuyenXeRequest){
-        BenXe benXeDi = benXeRepository.findBenXeByTenBenXeLike(tuyenXeRequest.getTenBenXeDi());
+        BusStation benXeDi = benXeRepository.findBenXeByTenBenXeLike(tuyenXeRequest.getTenBenXeDi());
         if(benXeDi == null) return null;
-        BenXe benXeDen = benXeRepository.findBenXeByTenBenXeLike(tuyenXeRequest.getTenBenXeDen());
+        BusStation benXeDen = benXeRepository.findBenXeByTenBenXeLike(tuyenXeRequest.getTenBenXeDen());
         if(benXeDen == null) return null;
         return tuyenXeRepository.findTuyenXeByBenXeDiLikeAndBenXeDenLikeAndNgayDiLike(benXeDi,benXeDen, tuyenXeRequest.getNgayDi());
     }

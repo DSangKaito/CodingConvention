@@ -1,8 +1,8 @@
 package com.example.datvexe.services.impl;
 
-import com.example.datvexe.common.TrangThai;
+import com.example.datvexe.common.Status;
 import com.example.datvexe.models.Admin;
-import com.example.datvexe.models.TaiKhoan;
+import com.example.datvexe.models.Account;
 import com.example.datvexe.payloads.requests.AdminRequest;
 import com.example.datvexe.payloads.requests.SignUpRequest;
 import com.example.datvexe.payloads.responses.DataResponse;
@@ -26,16 +26,16 @@ public class AdminServiceImpl implements AdminService {
     @Autowired
     CommonServiceImpl commonService;
 
-    public TaiKhoan convertAdminRequestToTaiKhoan(AdminRequest adminRequest, Long adminId){
-        TaiKhoan taiKhoan = taiKhoanRepository.findTaiKhoanByAdmin_Id(adminId);
+    public Account convertAdminRequestToTaiKhoan(AdminRequest adminRequest, Long adminId){
+        Account taiKhoan = taiKhoanRepository.findTaiKhoanByAdmin_Id(adminId);
         if (taiKhoan == null) return null;
         taiKhoan.setRole(adminRequest.getRole());
-        if (adminRequest.getTrangThaiHoatDong()==null) adminRequest.setTrangThaiHoatDong(TrangThai.ACTIVE);
+        if (adminRequest.getTrangThaiHoatDong()==null) adminRequest.setTrangThaiHoatDong(Status.ACTIVE);
         taiKhoan.setTrangThaiHoatDong(adminRequest.getTrangThaiHoatDong());
         return taiKhoan;
     }
 
-    public Admin convertAdminRequestToAdmin(AdminRequest adminRequest, Admin admin, TaiKhoan taiKhoan){
+    public Admin convertAdminRequestToAdmin(AdminRequest adminRequest, Admin admin, Account taiKhoan){
         admin.setName(adminRequest.getName());
         admin.setSdt(adminRequest.getSdt());
         admin.setCmnd(adminRequest.getCmnd());
@@ -65,7 +65,7 @@ public class AdminServiceImpl implements AdminService {
     public DataResponse updateAdmin(AdminRequest adminRequest, Long adminId) {
         Admin admin = adminRepository.findAdminById(adminId);
         if (admin == null) return new DataResponse("1","/");
-        TaiKhoan taiKhoanNew = convertAdminRequestToTaiKhoan(adminRequest, adminId);
+        Account taiKhoanNew = convertAdminRequestToTaiKhoan(adminRequest, adminId);
         if (taiKhoanNew == null) return new DataResponse("2","/");
         Admin adminNew = convertAdminRequestToAdmin(adminRequest, admin, taiKhoanNew);
         int check = commonService.checkInForUpdateAccount(convertAdminRequestToSignUpRequest(adminRequest),taiKhoanNew);

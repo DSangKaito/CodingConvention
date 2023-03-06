@@ -1,8 +1,7 @@
 package com.example.datvexe.controllers;
 
 import com.example.datvexe.handler.CustomException;
-import com.example.datvexe.models.HangHoa;
-import com.example.datvexe.models.VeXe;
+import com.example.datvexe.models.Ticket;
 import com.example.datvexe.payloads.requests.VeXeRequest;
 import com.example.datvexe.payloads.responses.DataResponse;
 import com.example.datvexe.services.VeXeService;
@@ -23,7 +22,7 @@ public class VeXeController {
     @GetMapping("/user-id/{id}")
     public DataResponse getAllVexXeByUserId(@PathVariable("id") Long id){
         if(id == null) throw new CustomException("400","Khong ton tai user!!!!");
-        List<VeXe> vexe = veXeService.getAllVeXeByUserId(id);
+        List<Ticket> vexe = veXeService.getAllVeXeByUserId(id);
         if (vexe == null) throw new CustomException("404", "Khong ton tai user!!!");
         if (vexe.size() == 0) return new DataResponse("200", "Chua dat ve!!!");
         return new DataResponse("200",vexe);
@@ -34,7 +33,7 @@ public class VeXeController {
     public DataResponse getAllVexXeByTuyenXeId(@PathVariable("id") String id){
         if(id == null) throw new CustomException("400","Missing field!!!!");
         Long tuyenXeId = Long.valueOf(id);
-        List<VeXe> vexe = veXeService.getAllVeXeByTuyenXeId(tuyenXeId);
+        List<Ticket> vexe = veXeService.getAllVeXeByTuyenXeId(tuyenXeId);
         if (vexe == null) throw new CustomException("404", "Khong ton tai tuyen xe!!!");
         if (vexe.size() == 0) return new DataResponse("200", "Chua dat ve!!!");
         return new DataResponse("200",vexe);
@@ -58,7 +57,7 @@ public class VeXeController {
     public DataResponse updateVeXe(@PathVariable("id") String id,@RequestBody VeXeRequest veXeRequest){
         if(veXeRequest == null || id==null)  throw  new CustomException("400","Missing field!!!");
         Long veXeId = Long.valueOf(id);
-        VeXe veXe= veXeService.updateVeXe(veXeRequest,veXeId);
+        Ticket veXe= veXeService.updateVeXe(veXeRequest,veXeId);
         if (veXe == null) throw new CustomException("404","Thay doi thong tin ve xe that bai!!!");
         return new DataResponse("200",veXe);
     }

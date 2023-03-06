@@ -1,7 +1,7 @@
 package com.example.datvexe.controllers;
 
 import com.example.datvexe.handler.CustomException;
-import com.example.datvexe.models.TaiKhoan;
+import com.example.datvexe.models.Account;
 import com.example.datvexe.payloads.requests.TaiKhoanRequest;
 import com.example.datvexe.payloads.responses.DataResponse;
 import com.example.datvexe.services.impl.TaiKhoanServiceImpl;
@@ -27,7 +27,7 @@ public class TaiKhoanController {
     public DataResponse getTaiKhoanById(@PathVariable("id") String id) {
         if (id == null) throw new CustomException("404","Missing id!!");
         Long taiKhoanId = Long.valueOf(id);
-        TaiKhoan taiKhoan = taiKhoanService.getTaiKhoanById(taiKhoanId);
+        Account taiKhoan = taiKhoanService.getTaiKhoanById(taiKhoanId);
         if (taiKhoan == null) return new DataResponse("400","Khong co tai khoan!!!");
         return new DataResponse("200",taiKhoan);
     }
@@ -35,7 +35,7 @@ public class TaiKhoanController {
     @GetMapping("/all")
     @PreAuthorize("hasAnyRole('ADMIN')")
     public DataResponse getAllTaiKhoan(){
-        List<TaiKhoan> listTaiKhoan = taiKhoanService.getAll();
+        List<Account> listTaiKhoan = taiKhoanService.getAll();
         if (listTaiKhoan == null) return new DataResponse("404","Khong co tai khoan nao!!!");
         return new DataResponse("200",listTaiKhoan);
     }
@@ -46,7 +46,7 @@ public class TaiKhoanController {
         Long taiKhoanId = Long.valueOf(id);
         String password = passwordEncoder.encode(taiKhoanRequest.getPassword());
         taiKhoanRequest.setPassword(password);
-        TaiKhoan taiKhoanupdate =  taiKhoanService.updateTaiKhoan(taiKhoanRequest,taiKhoanId);
+        Account taiKhoanupdate =  taiKhoanService.updateTaiKhoan(taiKhoanRequest,taiKhoanId);
         if (taiKhoanupdate == null) throw new CustomException("404", "Tai khoan khong ton tai!!!");
         return new DataResponse("200",taiKhoanupdate);
     }

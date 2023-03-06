@@ -11,7 +11,7 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name = "xe")
-public class Xe {
+public class Bus {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -23,15 +23,15 @@ public class Xe {
     @ManyToOne
     @JoinColumn(name = "nhaxe_id",referencedColumnName = "id")
     @JsonManagedReference
-    private NhaXe nhaXe;
+    private BusCompany busCompany;
 
     @ManyToOne
     @JoinColumn(name = "loaixe_id",referencedColumnName = "id")
     @JsonManagedReference
-    private LoaiXe loaiXe;
+    private TypeOfBus typeOfBus;
 
-    @OneToMany(mappedBy="xe")
+    @OneToMany(mappedBy="bus")
     @JsonIgnore
-    private List<TuyenXe> tuyenXe;
+    private List<BusLine> busLines;
 
 }

@@ -1,12 +1,12 @@
 package com.example.datvexe.services.impl;
 
-import com.example.datvexe.common.TrangThai;
+import com.example.datvexe.common.Status;
 import com.example.datvexe.models.*;
 import com.example.datvexe.payloads.requests.VeXeRequest;
 import com.example.datvexe.payloads.responses.DataResponse;
-import com.example.datvexe.repositories.TuyenXeRepository;
+import com.example.datvexe.repositories.BusLineRepository;
 import com.example.datvexe.repositories.UserRepository;
-import com.example.datvexe.repositories.VeXeRepository;
+import com.example.datvexe.repositories.TicketRepository;
 import com.example.datvexe.services.VeXeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,12 +21,12 @@ public class VeXeServiceImpl implements VeXeService {
     UserRepository userRepository;
 
     @Autowired
-    VeXeRepository veRepository;
+    TicketRepository veRepository;
 
     @Autowired
-    TuyenXeRepository tuyenXeRepository;
+    BusLineRepository tuyenXeRepository;
 
-    public VeXe convertVeXeRequestToVeXe(VeXeRequest veXeRequest, VeXe veXe, int soGhe) {
+    public Ticket convertVeXeRequestToVeXe(VeXeRequest veXeRequest, Ticket veXe, int soGhe) {
         veXe.setSoGhe(soGhe);
         veXe.setNgayDat(veXeRequest.getNgayDat());
         veXe.setNgayNhan(veXeRequest.getNgayNhan());
@@ -37,14 +37,14 @@ public class VeXeServiceImpl implements VeXeService {
         return veXe;
     }
 
-    public List<VeXe> getAllVeXeByUserId(Long id){
+    public List<Ticket> getAllVeXeByUserId(Long id){
         User user = userRepository.findUserById(id);
         if(user == null) return null;
-        List<VeXe> veXeList = veRepository.getVeXeByUser(user);
+        List<Ticket> veXeList = veRepository.getVeXeByUser(user);
         return veXeList;
     }
 
-    private VeXe convertVeXeRequestUpdateToVeXe(VeXeRequest veXeRequest, VeXe veXe, int soGhe){
+    private Ticket convertVeXeRequestUpdateToVeXe(VeXeRequest veXeRequest, Ticket veXe, int soGhe){
         veXe.setSoGhe(soGhe);
         veXe.setHinhThucThanhToan(veXeRequest.getHinhThucThanhToan());
         veXe.setTrangThai(veXeRequest.getTrangThai());
@@ -53,11 +53,11 @@ public class VeXeServiceImpl implements VeXeService {
     }
 
     @Override
-    public List<VeXe> getAllVeXeByTuyenXeId(Long tuyenXeId) {
-        TuyenXe tuyenXe = tuyenXeRepository.findOneById(tuyenXeId);
+    public List<Ticket> getAllVeXeByTuyenXeId(Long tuyenXeId) {
+        BusLine tuyenXe = tuyenXeRepository.findOneById(tuyenXeId);
         if(tuyenXe == null) return null;
-        List<VeXe> veXeList = veRepository.findVeXeByTuyenXe(tuyenXe);
-        if (veXeList == null) veXeList = new ArrayList<VeXe>();
+        List<Ticket> veXeList = veRepository.findVeXeByTuyenXe(tuyenXe);
+        if (veXeList == null) veXeList = new ArrayList<Ticket>();
         return veXeList;
     }
 
@@ -68,12 +68,12 @@ public class VeXeServiceImpl implements VeXeService {
         if (tuyenXe == null) return new DataResponse("1","/");
         User user = userRepository.findUserById(veXeRequest.getUserId());
         if (user == null) return new DataResponse("2","/");
-        List<VeXe> veXeNewList = new ArrayList<VeXe>();
+        List<Ticket> veXeNewList = new ArrayList<Ticket>();
         for(Integer soGhe : veXeRequest.getSoGhe()){
-            VeXe veXeCheck = veRepository.findVeXeByTuyenXe_IdAndSoGhe(tuyenXe.getId(), soGhe);
+            Ticket veXeCheck = veRepository.findVeXeByTuyenXe_IdAndSoGhe(tuyenXe.getId(), soGhe);
             if (veXeCheck != null) return new DataResponse("3","/");
-            veXeRequest.setTrangThai(TrangThai.INACTIVE);
-            VeXe veXeNew = new VeXe();
+            veXeRequest.setTrangThai(Status.INACTIVE);
+            Ticket veXeNew = new Ticket();
             veXeNew = convertVeXeRequestToVeXe(veXeRequest,veXeNew,soGhe);
             if (veXeNew == null) return new DataResponse("4","/");
             veXeNewList.add(veRepository.save(veXeNew));
@@ -82,20 +82,20 @@ public class VeXeServiceImpl implements VeXeService {
     }
 
     @Override
-    public VeXe updateVeXe(VeXeRequest veXeRequest, Long veXeId) {
-        VeXe veXeCheck = veRepository.findVeXeById(veXeId);
+    public Ticket updateVeXe(VeXeRequest veXeRequest, Long veXeId) {
+        Ticket veXeCheck = veRepository.findVeXeById(veXeId);
         if (veXeCheck==null) return null;
         Integer soGheCheck = 0;
         for (Integer soGhe : veXeRequest.getSoGhe())
             soGheCheck = soGhe;
-        VeXe veXeAdd = convertVeXeRequestUpdateToVeXe(veXeRequest, veXeCheck,soGheCheck);
-        VeXe veXeNew = veRepository.save(veXeAdd);
+        Ticket veXeAdd = convertVeXeRequestUpdateToVeXe(veXeRequest, veXeCheck,soGheCheck);
+        Ticket veXeNew = veRepository.save(veXeAdd);
         return veXeNew;
     }
 
     @Override
     public Long deleteVeXe(Long veXeId) {
-        VeXe veXeCheck = veRepository.findVeXeById(veXeId);
+        Ticket veXeCheck = veRepository.findVeXeById(veXeId);
         if (veXeCheck == null) return null;
         veRepository.delete(veXeCheck);
         return veXeCheck.getId();

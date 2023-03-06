@@ -3,12 +3,11 @@ package com.example.datvexe.controllers;
 import com.example.datvexe.common.Role;
 import com.example.datvexe.config.CustomTaiKhoanDetails;
 import com.example.datvexe.config.JwtTokenProvider;
-import com.example.datvexe.models.TaiKhoan;
+import com.example.datvexe.models.Account;
 import com.example.datvexe.payloads.requests.LoginRequest;
-import com.example.datvexe.payloads.responses.DataResponse;
 import com.example.datvexe.payloads.responses.LoginResponse;
 import com.example.datvexe.repositories.AdminRepository;
-import com.example.datvexe.repositories.NhaXeRepository;
+import com.example.datvexe.repositories.BusCompanyRepository;
 import com.example.datvexe.repositories.TaiKhoanRepository;
 import com.example.datvexe.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +34,7 @@ public class LoginController {
     UserRepository userRepository;
 
     @Autowired
-    NhaXeRepository nhaXeRepository;
+    BusCompanyRepository nhaXeRepository;
 
     @Autowired
     AdminRepository adminRepository;
@@ -56,7 +55,7 @@ public class LoginController {
         // Set thông tin authentication vào Security Context
         SecurityContextHolder.getContext().setAuthentication(authentication);
         Long id = 0L;
-        TaiKhoan taiKhoan = taiKhoanRepository.findTaiKhoanByUsername(loginRequest.getUsername());
+        Account taiKhoan = taiKhoanRepository.findTaiKhoanByUsername(loginRequest.getUsername());
         if (taiKhoan.getRole() == Role.USER)
             id = taiKhoan.getUser().getId();
         else  if (taiKhoan.getRole() == Role.NHAXE)
