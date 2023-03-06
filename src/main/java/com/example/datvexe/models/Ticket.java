@@ -1,7 +1,7 @@
-package com.example.datvexe.models;
+package com.example.ticketbooking.models;
 
-import com.example.datvexe.common.HinhThucThanhToan;
-import com.example.datvexe.common.TrangThai;
+import com.example.ticketBooking.common.payMethod;
+import com.example.ticketBooking.common.Status;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -15,37 +15,37 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
-@Table(name ="vexe")
-public class VeXe {
+@Table(name ="ticket")
+public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "soghe")
-    private int soGhe;
+    @Column(name = "seatNumber")
+    private int seatNumber;
 
-    @Column(name = "ngaydat")
-    private LocalDate ngayDat;
+    @Column(name = "bookingDate")
+    private LocalDate bookingDate;
 
-    @Column(name = "ngaynhan")
-    private LocalDate ngayNhan;
+    @Column(name = "pickDate")
+    private LocalDate pickDate;
 
     @ManyToOne
-    @JoinColumn(name = "tuyenxe_id",referencedColumnName = "id")
+    @JoinColumn(name = "schedule_id",referencedColumnName = "id")
     @JsonManagedReference
-    private TuyenXe tuyenXe;
+    private Schedule schedule;
 
     @ManyToOne
     @JoinColumn(name = "user_id",referencedColumnName = "id")
     @JsonManagedReference
     private User user;
 
-    @Column(name = "hinhthucthanhtoan")
+    @Column(name = "payMethod")
     @Enumerated(EnumType.STRING)
-    private HinhThucThanhToan hinhThucThanhToan;
+    private PayMethod payMethod;
 
-    @Column(name = "xacthuc")
+    @Column(name = "verify")
     @Enumerated(EnumType.STRING)
-    private TrangThai trangThai;
+    private Status status;
 }
