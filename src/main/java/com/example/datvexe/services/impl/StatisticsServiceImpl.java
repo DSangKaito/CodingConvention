@@ -103,12 +103,13 @@ public class StatisticsServiceImpl implements StatisticsService {
     @Override
     public List<StatisticsOderByAdminResponse> doStatisticsOderByAdmin(StatisticsByAdminRequest statisticsByAdminRequest) {
         // find all ticket valid
-        List<Ticket> ticketList = ticketRepository.findTiketByStatusOrStatus(Status.ACTIVE, Status.COMPLETED);
+        List<Ticket> ticketList = ticketRepository.findTiketByStatusOrStatus(Status.ACTIVE, Status.COMPLETED); // ! Have situation dont have data (tickerList có thể null)
         List<Ticket> ticketResultList = new ArrayList<Ticket>();
         // filter ticket valid with time
         for (Ticket ticket : ticketList) {
-            if (ticket.getDateOder().getMonthValue() == statisticsByAdminRequest.getMonth() && ticket.getDateOder().getYear() == statisticsByAdminRequest.getYear()) {
-                ticketResultList.add(ticket);
+            if (ticket.getDateOder().getMonthValue() == statisticsByAdminRequest.getMonth()
+                && ticket.getDateOder().getYear() == statisticsByAdminRequest.getYear()) {
+                        ticketResultList.add(ticket);
             }
         }
         // find all package valid
