@@ -22,28 +22,28 @@ public class Ticket {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "seatNumber")
-    private int seatNumber;
+    @Column(name = "numberSeat")
+    private int numberSeat;
 
-    @Column(name = "bookingDate")
-    private LocalDate bookingDate;
+    @Column(name = "dateOrder")
+    private LocalDate dateOrder;
 
-    @Column(name = "pickDate")
-    private LocalDate pickDate;
+    @Column(name = "dateReceive")
+    private LocalDate dateReceive;
 
     @ManyToOne
-    @JoinColumn(name = "schedule_id",referencedColumnName = "id")
+    @JoinColumn(name = "busLine",referencedColumnName = "id")
     @JsonManagedReference
-    private Schedule schedule;
+    private BusLine busLine;
 
     @ManyToOne
-    @JoinColumn(name = "user_id",referencedColumnName = "id")
+    @JoinColumn(name = "userId",referencedColumnName = "id")
     @JsonManagedReference
     private User user;
 
     @Column(name = "payMethod")
     @Enumerated(EnumType.STRING)
-    private PayMethod payMethod;
+    private Payments payments;
 
     @Column(name = "verify")
     @Enumerated(EnumType.STRING)

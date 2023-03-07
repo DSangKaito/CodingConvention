@@ -1,5 +1,5 @@
 package com.example.ticketbooking.common;
 
-public enum PayMethod {
+public enum Payments {
     ONLINE,OFFLINE;
 }

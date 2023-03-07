@@ -26,29 +26,31 @@ public class Ticket Controller {
         if(id == null) throw new CustomException("400","Not found user!!!!");
         List<Ticket> ticket  = ticket Service.getAllTicketByUserId(id);
         if (ticket  == null) throw new CustomException("404", "Not found user!!!");
+        // if not found ticket in List, throw message: Not found user.
         if (ticket .size() == 0) return new DataResponse("200", "You should booking!!!");
         return new DataResponse("200",ticket);
     }
 
-    @GetMapping("/schedule-id/{id}")
-    // get all ticket by schedule id
+    @GetMapping("/busLine-id/{id}")
+    // get all ticket by BusLine id
     @PreAuthorize("hasAnyRole('BUS_COMPANY','ADMIN')")
-    public DataResponse getAllTicketByScheduleId(@PathVariable("id") String id){
+    public DataResponse getAllTicketByBusLineId(@PathVariable("id") String id){
         if(id == null) throw new CustomException("400","Missing field!!!!");
-        Long scheduleId = Long.valueOf(id);
-        List<Ticket> ticket  = Ticket Service.getAllTicketByScheduleId(scheduleId);
-        if (ticket  == null) throw new CustomException("404", "Not found schedule!!!");
+        Long busLineId = Long.valueOf(id);
+        List<Ticket> ticket  = Ticket Service.getAllTicketByBusLineId(busLineId);
+        if (ticket  == null) throw new CustomException("404", "Not found BusLine!!!");
         if (ticket.size() == 0) return new DataResponse("200", "You should booking!!!");
         return new DataResponse("200",ticket );
     }
 
     @PostMapping("/add")
+    // verify user type when login success.
     @PreAuthorize("hasAnyRole('USER','BUS_COMPANY')")
     // add ticket when user booking
     public DataResponse addTicket (@RequestBody TicketRequest ticketRequest){
         if (ticketRequest == null) throw new CustomException("400","Missing field!!!");
         DataResponse dataResponse = Ticket Service.addTicket (ticketRequest);
-        if (dataResponse.getStatus()=="1") throw new CustomException("400", "Not found schedule!!!");
+        if (dataResponse.getStatus()=="1") throw new CustomException("400", "Not found BusLine!!!");
         if (dataResponse.getStatus()=="2") throw new CustomException("400", "Not found user!!!");
         if (dataResponse.getStatus()=="3") throw new CustomException("400", "Ghe da duoc dat!!!");
         if (dataResponse.getStatus()=="4") throw new CustomException("400", "Dang ky khong thanh cong!!!");
