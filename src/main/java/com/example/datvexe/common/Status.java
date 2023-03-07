@@ -1,5 +1,5 @@
-package com.example.datvexe.common;
+package com.example.ticketbooking.common;
 
 public enum Status {
-    ACTIVE,INACTIVE,COMPLETED;
+    ACTIVE,INACTIVE,COMPLETED, NON_DEFINED;
 }

@@ -1,4 +1,4 @@
-package com.example.datvexe.common;
+package com.example.ticketbooking.common;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,5 +1,5 @@
 package com.example.ticketbooking.common;
 
-public enum Role {
-    ADMIN,USER,NHAXE;
+public enum Payments {
+    ONLINE,OFFLINE;
 }

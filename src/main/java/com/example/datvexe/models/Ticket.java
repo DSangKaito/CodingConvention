@@ -8,41 +8,42 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 @Getter
 @Setter
-@Table(name ="vexe")
+@Table(name ="ticket")
 public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "soghe")
+    @Column(name = "numberSeat")
     private int numberSeat;
 
-    @Column(name = "ngaydat")
-    private LocalDate dateOder;
+    @Column(name = "dateOrder")
+    private LocalDate dateOrder;
 
-    @Column(name = "ngaynhan")
+    @Column(name = "dateReceive")
     private LocalDate dateReceive;
 
     @ManyToOne
-    @JoinColumn(name = "tuyenxe_id",referencedColumnName = "id")
+    @JoinColumn(name = "busLine",referencedColumnName = "id")
     @JsonManagedReference
     private BusLine busLine;
 
     @ManyToOne
-    @JoinColumn(name = "user_id",referencedColumnName = "id")
+    @JoinColumn(name = "userId",referencedColumnName = "id")
     @JsonManagedReference
     private User user;
 
-    @Column(name = "hinhthucthanhtoan")
+    @Column(name = "payMethod")
     @Enumerated(EnumType.STRING)
-    private HinhThucThanhToan hinhThucThanhToan;
+    private Payments payments;
 
-    @Column(name = "xacthuc")
+    @Column(name = "verify")
     @Enumerated(EnumType.STRING)
-    private Status trangThai;
+    private Status status;
 }
