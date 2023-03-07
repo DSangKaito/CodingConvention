@@ -1,6 +1,6 @@
 package com.example.datvexe.payloads.requests;
 
-import com.example.datvexe.common.TrangThai;
+import com.example.datvexe.common.Status;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,5 +19,5 @@ public class HangHoaRequest {
     private LocalDate ngayDat;
     private Long tuyenXeId;
     private Long userId;
-    private TrangThai trangThai;
+    private Status trangThai;
 }

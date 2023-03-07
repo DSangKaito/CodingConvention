@@ -1,5 +1,5 @@
 package com.example.datvexe.models;
-import com.example.datvexe.common.TrangThai;
+import com.example.datvexe.common.Status;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,39 +10,39 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @Setter
-@Table(name = "hanghoa")
-public class HangHoa {
+@Table(name = "package")
+public class Packages {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
     @Column(name = "cannang")
-    private Long canNang;
+    private Long weight;
 
     @Column(name = "gia")
-    private int gia;
+    private int fee;
 
     @Column(name = "tennguoinhan")
-    private String tenNguoNhan;
+    private String nameReceiver;
 
     @Column(name = "sdtnguoinhan")
-    private String sdtNguoiNhan;
+    private String phoneReceiver;
 
     @Column(name = "email")
     private String email;
 
     @Column(name = "ngaydat")
-    private LocalDate ngayDat;
+    private LocalDate dateOder;
 
     @Column(name = "trangthai")
     @Enumerated(EnumType.STRING)
-    private TrangThai trangThai;
+    private Status status;
 
     @ManyToOne
     @JoinColumn(name = "tuyenxe_id",referencedColumnName = "id")
     @JsonIgnore
-    private TuyenXe tuyenXe;
+    private BusLine busLine;
 
     @ManyToOne
     @JoinColumn(name = "user_id",referencedColumnName = "id")

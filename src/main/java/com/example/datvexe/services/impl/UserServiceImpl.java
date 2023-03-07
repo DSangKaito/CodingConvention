@@ -1,8 +1,7 @@
 package com.example.datvexe.services.impl;
 
-import com.example.datvexe.common.TrangThai;
-import com.example.datvexe.models.Admin;
-import com.example.datvexe.models.TaiKhoan;
+import com.example.datvexe.common.Status;
+import com.example.datvexe.models.Account;
 import com.example.datvexe.models.User;
 import com.example.datvexe.payloads.requests.SignUpRequest;
 import com.example.datvexe.payloads.requests.UserRequest;
@@ -27,16 +26,16 @@ public class UserServiceImpl implements UserService {
     @Autowired
     TaiKhoanRepository taiKhoanRepository;
 
-    private TaiKhoan convertUserRequestToTaiKhoan(UserRequest userRequest, Long userId) {
-        TaiKhoan taiKhoan = taiKhoanRepository.findTaiKhoanByUser_Id(userId);
+    private Account convertUserRequestToTaiKhoan(UserRequest userRequest, Long userId) {
+        Account taiKhoan = taiKhoanRepository.findTaiKhoanByUser_Id(userId);
         if (taiKhoan == null) return null;
         taiKhoan.setRole(userRequest.getRole());
-        if (userRequest.getTrangThaiHoatDong()==null) userRequest.setTrangThaiHoatDong(TrangThai.ACTIVE);
+        if (userRequest.getTrangThaiHoatDong()==null) userRequest.setTrangThaiHoatDong(Status.ACTIVE);
         taiKhoan.setTrangThaiHoatDong(userRequest.getTrangThaiHoatDong());
         return taiKhoan;
     }
 
-    private User convertUserRequestToUser(UserRequest userRequest, User user, TaiKhoan taiKhoan){
+    private User convertUserRequestToUser(UserRequest userRequest, User user, Account taiKhoan){
         user.setHoTen(userRequest.getHoTen());
         user.setSdt(userRequest.getSdt());
         user.setCmnd(userRequest.getCmnd());
@@ -71,7 +70,7 @@ public class UserServiceImpl implements UserService {
     public DataResponse updateUser(UserRequest userRequest, Long userId) {
         User user = userRepository.findUserById(userId);
         if (user == null) return new DataResponse("1","/");
-        TaiKhoan taiKhoanNew = convertUserRequestToTaiKhoan(userRequest, userId);
+        Account taiKhoanNew = convertUserRequestToTaiKhoan(userRequest, userId);
         if (taiKhoanNew == null) return new DataResponse("2","/");
         User userNew = convertUserRequestToUser(userRequest, user, taiKhoanNew);
         int check = commonService.checkInForUpdateAccount(convertUserRequestToSignUpRequest(userRequest),taiKhoanNew);

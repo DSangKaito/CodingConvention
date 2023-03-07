@@ -1,16 +1,15 @@
 package com.example.datvexe.services.impl;
 
 import com.example.datvexe.common.Provider;
-import com.example.datvexe.common.TrangThai;
+import com.example.datvexe.common.Status;
 import com.example.datvexe.config.CustomTaiKhoanDetails;
-import com.example.datvexe.models.TaiKhoan;
+import com.example.datvexe.models.Account;
 import com.example.datvexe.payloads.requests.TaiKhoanRequest;
 import com.example.datvexe.repositories.TaiKhoanRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,13 +21,13 @@ public class TaiKhoanServiceImpl implements UserDetailsService {
     TaiKhoanRepository taiKhoanRepository;
 
     public void processOAuthPostLogin(String username) {
-        TaiKhoan existTaiKhoan = taiKhoanRepository.findTaiKhoanByUsername(username);
+        Account existTaiKhoan = taiKhoanRepository.findTaiKhoanByUsername(username);
 
         if (existTaiKhoan == null) {
-            TaiKhoan newTaiKhoan = new TaiKhoan();
+            Account newTaiKhoan = new Account();
             newTaiKhoan.setUsername(username);
             newTaiKhoan.setProvider(Provider.GOOGLE);
-            newTaiKhoan.setTrangThaiHoatDong(TrangThai.ACTIVE);
+            newTaiKhoan.setTrangThaiHoatDong(Status.ACTIVE);
 
             taiKhoanRepository.save(newTaiKhoan);
         }
@@ -36,20 +35,20 @@ public class TaiKhoanServiceImpl implements UserDetailsService {
     }
 
 
-    public TaiKhoan getTaiKhoanById(Long id){
-        TaiKhoan taiKhoan = taiKhoanRepository.findTaiKhoanById(id);
+    public Account getTaiKhoanById(Long id){
+        Account taiKhoan = taiKhoanRepository.findTaiKhoanById(id);
         if (taiKhoan == null) return null;
         return taiKhoan;
     }
 
-    public List<TaiKhoan> getAll(){
-        List<TaiKhoan> listTaiKhoan = taiKhoanRepository.findAll();
+    public List<Account> getAll(){
+        List<Account> listTaiKhoan = taiKhoanRepository.findAll();
         if (listTaiKhoan.size() == 0) return null;
         return listTaiKhoan;
     }
 
-    public TaiKhoan updateTaiKhoan(TaiKhoanRequest taiKhoanRequest, Long id){
-        TaiKhoan taiKhoanCheck = taiKhoanRepository.findTaiKhoanById(id);
+    public Account updateTaiKhoan(TaiKhoanRequest taiKhoanRequest, Long id){
+        Account taiKhoanCheck = taiKhoanRepository.findTaiKhoanById(id);
         if(taiKhoanCheck == null) return null;
 //        String passWordEncoded = commonService.changePasswordToPasswordEncode(taiKhoanRequest.getPassword());
 //        String passWordEncoded = taiKhoanRequest.getPassword();
@@ -60,7 +59,7 @@ public class TaiKhoanServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        TaiKhoan user = taiKhoanRepository.findTaiKhoanByUsername(username);
+        Account user = taiKhoanRepository.findTaiKhoanByUsername(username);
         if (user == null) {
             throw new UsernameNotFoundException(username);
         }
@@ -68,7 +67,7 @@ public class TaiKhoanServiceImpl implements UserDetailsService {
     }
 
     public UserDetails loadUserById(Long id){
-        TaiKhoan user = taiKhoanRepository.findTaiKhoanById(id);
+        Account user = taiKhoanRepository.findTaiKhoanById(id);
         if (user == null) {
             return null;
         }

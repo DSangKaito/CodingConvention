@@ -1,7 +1,7 @@
 package com.example.datvexe.controllers;
 
 import com.example.datvexe.handler.CustomException;
-import com.example.datvexe.models.LoaiXe;
+import com.example.datvexe.models.TypeOfBus;
 import com.example.datvexe.payloads.requests.LoaiXeRequest;
 import com.example.datvexe.payloads.responses.DataResponse;
 import com.example.datvexe.services.LoaiXeService;
@@ -21,7 +21,7 @@ public class LoaiXeController {
 
     @GetMapping("/all")
     public DataResponse getAll(){
-        List<LoaiXe> loaiXeList;
+        List<TypeOfBus> loaiXeList;
         loaiXeList = loaiXeService.getAllLoaiXe();
         if(loaiXeList==null) throw new CustomException("404", "Khong co loai xe nao!!!");
         return new DataResponse("200", loaiXeList);
@@ -31,7 +31,7 @@ public class LoaiXeController {
     public DataResponse getById(@PathVariable("id") String id){
         if (id==null) throw new CustomException("400","Missing field!!");
         Long loaXeId = Long.valueOf(id);
-        LoaiXe loaiXe = loaiXeService.getLoaiXeById(loaXeId);
+        TypeOfBus loaiXe = loaiXeService.getLoaiXeById(loaXeId);
         if (loaiXe==null) throw new CustomException("404","Khong co loai xe nao theo yeu cau!!!");
         return new DataResponse("200",loaiXe);
     }
@@ -40,7 +40,7 @@ public class LoaiXeController {
     @PreAuthorize("hasAnyRole('ADMIN')")
     public DataResponse addLoaiXe(@RequestBody LoaiXeRequest loaiXeRequest){
         if (loaiXeRequest == null) throw new CustomException("400","Missing request!!!");
-        LoaiXe loaiXeNew = loaiXeService.addLoaiXe(loaiXeRequest);
+        TypeOfBus loaiXeNew = loaiXeService.addLoaiXe(loaiXeRequest);
         if (loaiXeNew == null) throw new CustomException("404", "Ten loai xe da ton tai!!!");
         return new DataResponse("200",loaiXeNew);
     }

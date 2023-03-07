@@ -1,5 +1,5 @@
 package com.example.datvexe.common;
 
-public enum TrangThai {
+public enum Status {
     ACTIVE,INACTIVE,COMPLETED;
 }

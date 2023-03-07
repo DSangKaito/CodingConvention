@@ -1,6 +1,6 @@
 package com.example.datvexe.services;
 
-import com.example.datvexe.models.NhaXe;
+import com.example.datvexe.models.BusCompany;
 import com.example.datvexe.payloads.requests.NhaXeRequest;
 import com.example.datvexe.payloads.responses.DataResponse;
 import com.example.datvexe.payloads.responses.NhaXeResponse;
@@ -10,9 +10,9 @@ import java.util.List;
 
 @Component
 public interface NhaXeService {
-    List<NhaXe> getAll();
+    List<BusCompany> getAll();
     List<NhaXeResponse> getAllForUser();
-    NhaXe getNhaXeById(Long id);
+    BusCompany getNhaXeById(Long id);
 
     NhaXeResponse getNhaXeByIdForUser(Long id);
     DataResponse updateNhaXe(NhaXeRequest nhaXeRequest, Long nhaXeId);

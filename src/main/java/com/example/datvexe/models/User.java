@@ -38,15 +38,15 @@ public class User {
     @OneToOne
     @JoinColumn(name = "taikhoan_id",referencedColumnName = "id")
     @JsonManagedReference
-    private TaiKhoan taiKhoan;
+    private Account taiKhoan;
 
     @OneToMany(mappedBy ="user")
     @JsonBackReference
-    private List<DanhGia> danhGia;
+    private List<Evaluation> danhGia;
 
     @OneToMany(mappedBy ="user")
     @JsonIgnore
-    private List<VeXe> veXe;
+    private List<Ticket> veXe;
 
     @OneToMany(mappedBy ="user")
     @JsonIgnore

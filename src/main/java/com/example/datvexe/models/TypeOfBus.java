@@ -11,7 +11,7 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name = "loaixe")
-public class LoaiXe {
+public class TypeOfBus {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -25,5 +25,5 @@ public class LoaiXe {
 
     @OneToMany(mappedBy ="loaiXe")
     @JsonIgnore
-    private List<Xe> xe;
+    private List<Bus> xe;
 }

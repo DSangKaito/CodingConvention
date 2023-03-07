@@ -1,7 +1,7 @@
 package com.example.datvexe.services.impl;
 
-import com.example.datvexe.common.TrangThai;
-import com.example.datvexe.models.BenXe;
+import com.example.datvexe.common.Status;
+import com.example.datvexe.models.BusStation;
 import com.example.datvexe.payloads.requests.BenXeRequest;
 import com.example.datvexe.repositories.BenXeRepository;
 import com.example.datvexe.services.BenXeService;
@@ -15,7 +15,7 @@ public class BenXeServiceImpl implements BenXeService {
     @Autowired
     BenXeRepository benXeRepository;
 
-    public BenXe convertBenXeRequestToBenXe(BenXeRequest benXeRequest, BenXe benXe) {
+    public BusStation convertBenXeRequestToBenXe(BenXeRequest benXeRequest, BusStation benXe) {
         benXe.setTinhThanh(benXeRequest.getTinhThanh());
         benXe.setTenBenXe(benXeRequest.getTenBenXe());
         benXe.setDiaChiChiTiet(benXeRequest.getDiaChiChiTiet());
@@ -23,35 +23,35 @@ public class BenXeServiceImpl implements BenXeService {
         return benXe;
     }
 
-    public List<BenXe> findAllBenXeForUser() {
-        return benXeRepository.findAllByTrangThai(TrangThai.ACTIVE);
+    public List<BusStation> findAllBenXeForUser() {
+        return benXeRepository.findAllByTrangThai(Status.ACTIVE);
     }
 
-    public List<BenXe> findAllBenXeForAdmin() {
+    public List<BusStation> findAllBenXeForAdmin() {
         return benXeRepository.findAll();
     }
 
-    public BenXe findBenXeById(Long id) {
+    public BusStation findBenXeById(Long id) {
         return benXeRepository.findOneById(id);
     }
 
-    public BenXe addNewBenXe(BenXeRequest benXeRequest) {
-        BenXe benXeCheck =benXeRepository.findBenXeByTenBenXeLike(benXeRequest.getTenBenXe());
+    public BusStation addNewBenXe(BenXeRequest benXeRequest) {
+        BusStation benXeCheck =benXeRepository.findBenXeByTenBenXeLike(benXeRequest.getTenBenXe());
         if (benXeCheck != null) return null;
-        BenXe newBenXe = new BenXe();
+        BusStation newBenXe = new BusStation();
         newBenXe = convertBenXeRequestToBenXe(benXeRequest, newBenXe);
         return benXeRepository.save(newBenXe);
     }
 
-    public BenXe updateBenXe(BenXeRequest benXe, Long id) {
-        BenXe newBenXe = benXeRepository.findOneById(id);
+    public BusStation updateBenXe(BenXeRequest benXe, Long id) {
+        BusStation newBenXe = benXeRepository.findOneById(id);
         if (newBenXe == null) return null;
         newBenXe = convertBenXeRequestToBenXe(benXe, newBenXe);
         return benXeRepository.save(newBenXe);
     }
 
     public Long deleteBenXe(Long id) {
-        BenXe newBenXe = benXeRepository.findOneById(id);
+        BusStation newBenXe = benXeRepository.findOneById(id);
         if (newBenXe == null) return null;
         benXeRepository.delete(newBenXe);
         return newBenXe.getId();

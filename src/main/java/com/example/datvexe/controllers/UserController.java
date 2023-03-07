@@ -1,13 +1,9 @@
 package com.example.datvexe.controllers;
 
 import com.example.datvexe.handler.CustomException;
-import com.example.datvexe.models.Admin;
-import com.example.datvexe.models.NhaXe;
 import com.example.datvexe.models.User;
-import com.example.datvexe.payloads.requests.AdminRequest;
 import com.example.datvexe.payloads.requests.UserRequest;
 import com.example.datvexe.payloads.responses.DataResponse;
-import com.example.datvexe.services.AdminService;
 import com.example.datvexe.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;

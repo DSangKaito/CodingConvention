@@ -1,6 +1,6 @@
 package com.example.datvexe.services;
 
-import com.example.datvexe.models.BenXe;
+import com.example.datvexe.models.BusStation;
 import com.example.datvexe.payloads.requests.BenXeRequest;
 import org.springframework.stereotype.Component;
 
@@ -9,15 +9,15 @@ import java.util.List;
 @Component
 public interface BenXeService {
 
-    List<BenXe> findAllBenXeForUser();
+    List<BusStation> findAllBenXeForUser();
 
-    List<BenXe> findAllBenXeForAdmin();
+    List<BusStation> findAllBenXeForAdmin();
 
-    BenXe findBenXeById(Long id);
+    BusStation findBenXeById(Long id);
 
-    BenXe addNewBenXe(BenXeRequest benXeRequest);
+    BusStation addNewBenXe(BenXeRequest benXeRequest);
 
-    BenXe updateBenXe(BenXeRequest benXeRequest, Long id);
+    BusStation updateBenXe(BenXeRequest benXeRequest, Long id);
 
     Long deleteBenXe(Long id);
 }

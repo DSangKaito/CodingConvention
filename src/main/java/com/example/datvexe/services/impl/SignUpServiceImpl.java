@@ -1,14 +1,14 @@
 package com.example.datvexe.services.impl;
 
 import com.example.datvexe.common.Role;
-import com.example.datvexe.common.TrangThai;
+import com.example.datvexe.common.Status;
 import com.example.datvexe.models.Admin;
-import com.example.datvexe.models.NhaXe;
-import com.example.datvexe.models.TaiKhoan;
+import com.example.datvexe.models.BusCompany;
+import com.example.datvexe.models.Account;
 import com.example.datvexe.models.User;
 import com.example.datvexe.payloads.requests.SignUpRequest;
 import com.example.datvexe.repositories.AdminRepository;
-import com.example.datvexe.repositories.NhaXeRepository;
+import com.example.datvexe.repositories.BusCompanyRepository;
 import com.example.datvexe.repositories.TaiKhoanRepository;
 import com.example.datvexe.repositories.UserRepository;
 import com.example.datvexe.services.SignUpService;
@@ -29,22 +29,22 @@ public class SignUpServiceImpl implements SignUpService {
     UserRepository userRepository;
 
     @Autowired
-    NhaXeRepository nhaXeRepository;
+    BusCompanyRepository nhaXeRepository;
 
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    public TaiKhoan convertSignUpToTaiKhoan(SignUpRequest signUpRequest){
-        TaiKhoan taiKhoan = new TaiKhoan();
+    public Account convertSignUpToTaiKhoan(SignUpRequest signUpRequest){
+        Account taiKhoan = new Account();
         taiKhoan.setUsername(signUpRequest.getUsername());
         taiKhoan.setPassword(signUpRequest.getPassword());
         taiKhoan.setRole(signUpRequest.getRole());
-        taiKhoan.setTrangThaiHoatDong(TrangThai.ACTIVE);
-        if (signUpRequest.getRole() == Role.NHAXE) taiKhoan.setTrangThaiHoatDong(TrangThai.INACTIVE);
+        taiKhoan.setTrangThaiHoatDong(Status.ACTIVE);
+        if (signUpRequest.getRole() == Role.NHAXE) taiKhoan.setTrangThaiHoatDong(Status.INACTIVE);
         return taiKhoan;
     }
 
-    public User convertSignUpToUser(SignUpRequest signUpRequest, TaiKhoan taiKhoan) {
+    public User convertSignUpToUser(SignUpRequest signUpRequest, Account taiKhoan) {
         User user = new User();
         user.setHoTen(signUpRequest.getHoTen());
         user.setCmnd(signUpRequest.getCmnd());
@@ -55,8 +55,8 @@ public class SignUpServiceImpl implements SignUpService {
         return user;
     }
 
-    public NhaXe convertSignUpToNhaXe(SignUpRequest signUpRequest, TaiKhoan taiKhoan){
-        NhaXe nhaXe = new NhaXe();
+    public BusCompany convertSignUpToNhaXe(SignUpRequest signUpRequest, Account taiKhoan){
+        BusCompany nhaXe = new BusCompany();
         nhaXe.setTenNhaXe(signUpRequest.getTenNhaXe());
         nhaXe.setSdt(signUpRequest.getSdt());
         nhaXe.setMoTaNgan(signUpRequest.getMoTaNgan());
@@ -65,7 +65,7 @@ public class SignUpServiceImpl implements SignUpService {
         return nhaXe;
     }
 
-    public Admin convertSignUpToAdmin(SignUpRequest signUpRequest, TaiKhoan taiKhoan){
+    public Admin convertSignUpToAdmin(SignUpRequest signUpRequest, Account taiKhoan){
         Admin admin = new Admin();
         admin.setName(signUpRequest.getName());
         admin.setEmail(signUpRequest.getEmail());
@@ -76,7 +76,7 @@ public class SignUpServiceImpl implements SignUpService {
     }
 
     public int checkInfo(SignUpRequest signUpRequest){
-        TaiKhoan taiKhoan = taiKhoanRepository.findTaiKhoanByUsername(signUpRequest.getUsername());
+        Account taiKhoan = taiKhoanRepository.findTaiKhoanByUsername(signUpRequest.getUsername());
         if(taiKhoan != null) return 1;
 
         //User
@@ -88,7 +88,7 @@ public class SignUpServiceImpl implements SignUpService {
         if(userold != null) return 4;
 
         //NhaXe
-        NhaXe nhaXe = nhaXeRepository.findNhaXeBySdt(signUpRequest.getSdt());
+        BusCompany nhaXe = nhaXeRepository.findNhaXeBySdt(signUpRequest.getSdt());
         if(nhaXe != null) return 3;
 
         //Admin
@@ -106,11 +106,11 @@ public class SignUpServiceImpl implements SignUpService {
         int check = checkInfo(signUpRequest);
         if (check!=5) return check;
 
-        TaiKhoan taiKhoanNew= convertSignUpToTaiKhoan(signUpRequest);
+        Account taiKhoanNew= convertSignUpToTaiKhoan(signUpRequest);
         String password = passwordEncoder.encode(signUpRequest.getPassword());
         taiKhoanNew.setPassword(password);
-        TaiKhoan taiKhoanAdd = taiKhoanRepository.save(taiKhoanNew);
-        TaiKhoan taiKhoanOfUsername = new TaiKhoan();
+        Account taiKhoanAdd = taiKhoanRepository.save(taiKhoanNew);
+        Account taiKhoanOfUsername = new Account();
         if(taiKhoanAdd != null)  {
             taiKhoanOfUsername = taiKhoanRepository.findTaiKhoanByUsername(taiKhoanAdd.getUsername());
         }
@@ -125,13 +125,13 @@ public class SignUpServiceImpl implements SignUpService {
         int check = checkInfo(signUpRequest);
         if (check!=5) return check;
 
-        NhaXe nhaXe = nhaXeRepository.findNhaXeByTenNhaXe(signUpRequest.getTenNhaXe());
+        BusCompany nhaXe = nhaXeRepository.findNhaXeByTenNhaXe(signUpRequest.getTenNhaXe());
         if (nhaXe != null) return 6;
-        TaiKhoan taiKhoanNew= convertSignUpToTaiKhoan(signUpRequest);
+        Account taiKhoanNew= convertSignUpToTaiKhoan(signUpRequest);
         String password = passwordEncoder.encode(signUpRequest.getPassword());
         taiKhoanNew.setPassword(password);
-        TaiKhoan taiKhoanAdd = taiKhoanRepository.save(taiKhoanNew);
-        NhaXe nhaXeNew = convertSignUpToNhaXe(signUpRequest,taiKhoanAdd);
+        Account taiKhoanAdd = taiKhoanRepository.save(taiKhoanNew);
+        BusCompany nhaXeNew = convertSignUpToNhaXe(signUpRequest,taiKhoanAdd);
         nhaXeRepository.save(nhaXeNew);
         return 5;
     }
@@ -140,11 +140,11 @@ public class SignUpServiceImpl implements SignUpService {
         int check = checkInfo(signUpRequest);
         if (check != 5) return check;
 
-        TaiKhoan taiKhoanNew = convertSignUpToTaiKhoan(signUpRequest);
+        Account taiKhoanNew = convertSignUpToTaiKhoan(signUpRequest);
         String password = passwordEncoder.encode(signUpRequest.getPassword());
         taiKhoanNew.setPassword(password);
-        TaiKhoan taiKhoanAdd = taiKhoanRepository.save(taiKhoanNew);
-        TaiKhoan taiKhoanOfAdmin = new TaiKhoan();
+        Account taiKhoanAdd = taiKhoanRepository.save(taiKhoanNew);
+        Account taiKhoanOfAdmin = new Account();
         if (taiKhoanAdd != null) {
             taiKhoanOfAdmin = taiKhoanRepository.findTaiKhoanByUsername(taiKhoanAdd.getUsername());
         }

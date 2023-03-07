@@ -9,7 +9,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Data
-public class ThongKeAdminRequest {
+public class StatisticsByAdminRequest {
     private int month;
     private int year;
 }

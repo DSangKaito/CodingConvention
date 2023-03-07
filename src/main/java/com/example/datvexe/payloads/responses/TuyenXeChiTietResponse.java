@@ -1,9 +1,6 @@
 package com.example.datvexe.payloads.responses;
 
-import com.example.datvexe.common.TrangThai;
-import com.example.datvexe.models.BenXe;
-import com.example.datvexe.models.LoaiXe;
-import com.example.datvexe.services.BenXeService;
+import com.example.datvexe.common.Status;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,7 +21,7 @@ public class TuyenXeChiTietResponse {
     private LocalTime gioDi;//
     private String thoiGianHanhTrinh;//
     private Integer giaVe;//
-    private TrangThai trangThai;//
+    private Status trangThai;//
     private int sucChua;
     private String sdt;
 }

@@ -1,10 +1,9 @@
 package com.example.datvexe.services.impl;
 
-import com.example.datvexe.models.DanhGia;
+import com.example.datvexe.models.Evaluation;
 import com.example.datvexe.payloads.requests.DanhGiaRequest;
-import com.example.datvexe.payloads.responses.DataResponse;
-import com.example.datvexe.repositories.DanhGiaRepository;
-import com.example.datvexe.repositories.NhaXeRepository;
+import com.example.datvexe.repositories.EvaluationRepository;
+import com.example.datvexe.repositories.BusCompanyRepository;
 import com.example.datvexe.repositories.UserRepository;
 import com.example.datvexe.services.DanhGiaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,15 +15,15 @@ import java.util.List;
 public class DanhGiaServiceImpl implements DanhGiaService {
 
     @Autowired
-    DanhGiaRepository danhGiaRepository;
+    EvaluationRepository danhGiaRepository;
 
     @Autowired
     UserRepository userRepository;
 
     @Autowired
-    NhaXeRepository nhaXeRepository;
+    BusCompanyRepository nhaXeRepository;
 
-    public DanhGia convertDanhGiaRequestToDanhGia(DanhGiaRequest danhGiaRequest, DanhGia danhGia){
+    public Evaluation convertDanhGiaRequestToDanhGia(DanhGiaRequest danhGiaRequest, Evaluation danhGia){
         danhGia.setSoSao(danhGiaRequest.getSoSao());
         danhGia.setNoiDung(danhGiaRequest.getNoiDung());
         danhGia.setGioDang(danhGiaRequest.getGioDang());
@@ -34,34 +33,34 @@ public class DanhGiaServiceImpl implements DanhGiaService {
         return danhGia;
     }
 
-    public DanhGia addDanhGia(DanhGiaRequest danhGiaRequest){
-        DanhGia danhGia =  danhGiaRepository.findDanhGiaByUser_IdAndNhaXe_Id(danhGiaRequest.getUserId(),danhGiaRequest.getNhaXeId());
+    public Evaluation addDanhGia(DanhGiaRequest danhGiaRequest){
+        Evaluation danhGia =  danhGiaRepository.findDanhGiaByUser_IdAndNhaXe_Id(danhGiaRequest.getUserId(),danhGiaRequest.getNhaXeId());
         if (danhGia == null) {
-            danhGia = new DanhGia();
+            danhGia = new Evaluation();
         }
-        DanhGia danhGiaNew = convertDanhGiaRequestToDanhGia(danhGiaRequest,danhGia);
+        Evaluation danhGiaNew = convertDanhGiaRequestToDanhGia(danhGiaRequest,danhGia);
         if (danhGiaNew == null) return null;
         danhGiaNew = danhGiaRepository.save(danhGiaNew);
         return danhGiaNew;
     }
 
     @Override
-    public DanhGia getDanhGiaById(Long id) {
-        DanhGia danhGia = danhGiaRepository.findDanhGiaById(id);
+    public Evaluation getDanhGiaById(Long id) {
+        Evaluation danhGia = danhGiaRepository.findDanhGiaById(id);
         if (danhGia == null) return null;
         return danhGia;
     }
 
     @Override
-    public List<DanhGia> getDanhGiaByNhaXeId(Long nhaXeId) {
-        List<DanhGia> danhGia = danhGiaRepository.findDanhGiasByNhaXe_Id(nhaXeId);
+    public List<Evaluation> getDanhGiaByNhaXeId(Long nhaXeId) {
+        List<Evaluation> danhGia = danhGiaRepository.findDanhGiasByNhaXe_Id(nhaXeId);
         if (danhGia.size()==0) return null;
         return danhGia;
     }
 
     @Override
     public Long deleteDanhGia(Long id) {
-        DanhGia danhGia = danhGiaRepository.findDanhGiaById(id);
+        Evaluation danhGia = danhGiaRepository.findDanhGiaById(id);
         if (danhGia == null) return null;
         danhGiaRepository.delete(danhGia);
         return danhGia.getId();

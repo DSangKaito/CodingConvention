@@ -1,11 +1,9 @@
 package com.example.datvexe.models;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -13,14 +11,14 @@ import java.time.LocalTime;
 @Getter
 @Setter
 @Table(name = "danhgia")
-public class DanhGia {
+public class Evaluation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
     @Column(name = "sosao")
-    private int soSao;
+    private int start;
 
     @Column(name = "noidung")
     private String noiDung;
@@ -39,6 +37,6 @@ public class DanhGia {
     @ManyToOne
     @JoinColumn(name = "nhaxe_id", referencedColumnName = "id")
     @JsonManagedReference
-    private NhaXe nhaXe;
+    private BusCompany nhaXe;
 
 }

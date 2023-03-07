@@ -1,7 +1,6 @@
 package com.example.datvexe.models;
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
@@ -14,35 +13,35 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name = "nhaxe")
-public class NhaXe {
+public class BusCompany {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
     @Column(name = "tennhaxe")
-    private String tenNhaXe;
+    private String nameBusCompany;
 
     @Column(name = "sdt")
-    private String sdt;
+    private String phoneNumber;
 
     @Column(name = "motangan")
-    private String moTaNgan;
+    private String description;
 
     @Column(name = "diachi")
-    private String diaChi;
+    private String address;
 
 
     @OneToOne
     @JoinColumn(name = "taikhoan_id",referencedColumnName = "id")
     @JsonManagedReference
-    private TaiKhoan taiKhoan;
+    private Account account;
 
     @OneToMany(mappedBy ="nhaXe")
     @JsonIgnore
-    private List<Xe> xe;
+    private List<Bus> buses;
 
     @OneToMany(mappedBy ="nhaXe")
     @JsonIgnore
-    private List<DanhGia> danhGia;
+    private List<Evaluation> evaluations;
 }

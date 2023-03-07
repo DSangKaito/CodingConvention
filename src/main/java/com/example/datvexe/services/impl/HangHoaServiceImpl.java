@@ -1,28 +1,26 @@
 package com.example.datvexe.services.impl;
 
-import com.example.datvexe.common.TrangThai;
-import com.example.datvexe.models.BenXe;
+import com.example.datvexe.common.Status;
 import com.example.datvexe.models.HangHoa;
 import com.example.datvexe.payloads.requests.HangHoaRequest;
 import com.example.datvexe.payloads.responses.DataResponse;
-import com.example.datvexe.repositories.HangHoaRepository;
-import com.example.datvexe.repositories.TuyenXeRepository;
+import com.example.datvexe.repositories.PackagesRepository;
+import com.example.datvexe.repositories.BusLineRepository;
 import com.example.datvexe.repositories.UserRepository;
 import com.example.datvexe.services.HangHoaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class HangHoaServiceImpl implements HangHoaService {
 
     @Autowired
-    HangHoaRepository hangHoaRepository;
+    PackagesRepository hangHoaRepository;
 
     @Autowired
-    TuyenXeRepository tuyenXeRepository;
+    BusLineRepository tuyenXeRepository;
 
     @Autowired
     UserRepository userRepository;
@@ -46,7 +44,7 @@ public class HangHoaServiceImpl implements HangHoaService {
         DataResponse dataResponse = convertHangHoaRequestAddToHangHoa(hangHoaForUserRequest);
         if (dataResponse.getStatus()!="3") return dataResponse;
         HangHoa hangHoa= (HangHoa) dataResponse.getObject();
-        hangHoa.setTrangThai(TrangThai.INACTIVE);
+        hangHoa.setTrangThai(Status.INACTIVE);
         HangHoa hangHoaAdd = hangHoaRepository.save(hangHoa);
         return new DataResponse("200", hangHoaAdd);
     }

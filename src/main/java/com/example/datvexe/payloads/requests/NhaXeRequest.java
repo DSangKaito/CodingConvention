@@ -1,7 +1,7 @@
 package com.example.datvexe.payloads.requests;
 
 import com.example.datvexe.common.Role;
-import com.example.datvexe.common.TrangThai;
+import com.example.datvexe.common.Status;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,7 +18,7 @@ public class NhaXeRequest {
     private String moTaNgan;
     private String diaChi;
     @Enumerated(EnumType.STRING)
-    private TrangThai trangThaiHoatDong;
+    private Status trangThaiHoatDong;
     @Enumerated(EnumType.STRING)
     private Role role;
 }

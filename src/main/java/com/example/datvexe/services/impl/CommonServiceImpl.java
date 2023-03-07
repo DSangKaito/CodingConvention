@@ -1,18 +1,16 @@
 package com.example.datvexe.services.impl;
 
 import com.example.datvexe.common.Role;
-import com.example.datvexe.models.TaiKhoan;
+import com.example.datvexe.models.Account;
 import com.example.datvexe.payloads.requests.SignUpRequest;
 import com.example.datvexe.repositories.AdminRepository;
-import com.example.datvexe.repositories.NhaXeRepository;
+import com.example.datvexe.repositories.BusCompanyRepository;
 import com.example.datvexe.repositories.TaiKhoanRepository;
 import com.example.datvexe.repositories.UserRepository;
 import com.example.datvexe.services.CommonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Objects;
 
 @Service
 public class CommonServiceImpl implements CommonService {
@@ -23,7 +21,7 @@ public class CommonServiceImpl implements CommonService {
     UserRepository userRepository;
 
     @Autowired
-    NhaXeRepository nhaXeRepository;
+    BusCompanyRepository nhaXeRepository;
 
     @Autowired
     AdminRepository adminRepository;
@@ -31,8 +29,8 @@ public class CommonServiceImpl implements CommonService {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    public int checkInForUpdateAccount(SignUpRequest signUpRequest, TaiKhoan taiKhoan){
-        TaiKhoan taiKhoanCheck = taiKhoanRepository.findTaiKhoanByAdmin_Sdt(signUpRequest.getSdt());
+    public int checkInForUpdateAccount(SignUpRequest signUpRequest, Account taiKhoan){
+        Account taiKhoanCheck = taiKhoanRepository.findTaiKhoanByAdmin_Sdt(signUpRequest.getSdt());
         if(taiKhoanCheck != taiKhoan && taiKhoanCheck != null) return 1;
         taiKhoanCheck = taiKhoanRepository.findTaiKhoanByNhaXe_Sdt(signUpRequest.getSdt());
         if(taiKhoanCheck != taiKhoan && taiKhoanCheck != null) return 1;

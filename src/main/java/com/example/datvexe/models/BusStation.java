@@ -1,8 +1,7 @@
 package com.example.datvexe.models;
 
-import com.example.datvexe.common.TrangThai;
+import com.example.datvexe.common.Status;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,7 +12,7 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name = "benxe")
-public class BenXe {
+public class BusStation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,7 +30,7 @@ public class BenXe {
 
     @Column(name = "trangthai")
     @Enumerated(EnumType.STRING)
-    private TrangThai trangThai;
+    private Status trangThai;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL,mappedBy ="benXeDi")
     @JsonBackReference

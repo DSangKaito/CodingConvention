@@ -1,5 +1,5 @@
 package com.example.datvexe.common;
 
-public enum HinhThucThanhToan {
+public enum Payments {
     ONLINE,OFFLINE;
 }
