@@ -1,15 +1,15 @@
 --------------------------------Coding Convention-------------------------------------
 1.component "common":
   + Tại file "Payments.java":
-    Sửa lại cách đặt tên của enum Payments - viết hoa mỗi chữ cái đầu của enum.
-    Các constant ONLINE, OFFLINE - viết in hoa.
+    1.1 Sửa lại cách đặt tên của enum Payments - viết hoa mỗi chữ cái đầu của enum.
+    1.2 Các constant ONLINE, OFFLINE - viết in hoa.
   + Tại file "Status.java":
-    Sửa lại cách đặt tên của enum Status - viết hoa mỗi chữ cái đầu của enum.
-    Các constant ACTIVE,INACTIVE,COMPLETED, NON_DEFINED - viết in hoa.
+    1.3 Sửa lại cách đặt tên của enum Status - viết hoa mỗi chữ cái đầu của enum.
+    1.4 Các constant ACTIVE,INACTIVE,COMPLETED, NON_DEFINED - viết in hoa.
 2.component "controllers":
    + Tại file "TicketController.java":
      2.1 Sửa lại cách đặt tên của class Ticket - viết hoa mỗi chữ cái đầu của enum.
-     2.2 Tên các function viết theo nguyên tắt camel:
+     2.2 Tên các function viết theo nguyên tắc camel:
           - getAllTicketByUserId
           - getAllTicketByScheduleId
           - addTicket
